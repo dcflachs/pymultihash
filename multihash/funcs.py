@@ -13,14 +13,10 @@ from numbers import Integral
 import hashlib
 
 # Try to import known optional hashlib-compatible modules.
-try:
-    import sha3
-except ImportError:
-    sha3 = None
-try:
-    import pyblake2 as blake2
-except ImportError:
-    blake2 = None
+# try:
+#     import pyblake2 as blake2
+# except ImportError:
+#     blake2 = None
 
 
 def _is_app_specific_func(code):
@@ -85,16 +81,16 @@ class FuncReg(metaclass=_FuncRegMeta):
         (Func.sha2_256, 'sha256', hashlib.sha256),
         (Func.sha2_512, 'sha512', hashlib.sha512),
 
-        (Func.sha3_512, 'sha3_512', sha3.sha3_512 if sha3 else None),
-        (Func.sha3_384, 'sha3_384', sha3.sha3_384 if sha3 else None),
-        (Func.sha3_256, 'sha3_256', sha3.sha3_256 if sha3 else None),
-        (Func.sha3_224, 'sha3_224', sha3.sha3_224 if sha3 else None),
+        (Func.sha3_512, 'sha3_512', hashlib.sha3_512),
+        (Func.sha3_384, 'sha3_384', hashlib.sha3_384),
+        (Func.sha3_256, 'sha3_256', hashlib.sha3_256),
+        (Func.sha3_224, 'sha3_224', hashlib.sha3_224),
 
-        (Func.shake_128, 'shake_128', None),
-        (Func.shake_256, 'shake_256', None),
+        (Func.shake_128, 'shake_128', hashlib.shake_128),
+        (Func.shake_256, 'shake_256', hashlib.shake_256),
 
-        (Func.blake2b, 'blake2b', blake2.blake2b if blake2 else None),
-        (Func.blake2s, 'blake2s', blake2.blake2s if blake2 else None)]
+        (Func.blake2b, 'blake2b', hashlib.blake2b),
+        (Func.blake2s, 'blake2s', hashlib.blake2s)]
 
     # Hashlib compatibility data for a hash: hash name (e.g. ``sha256`` for
     # SHA-256, ``sha2-256`` in multihash), and the corresponding constructor.
