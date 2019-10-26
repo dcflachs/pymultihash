@@ -12,12 +12,33 @@ from numbers import Integral
 # Import standard hashlib-compatible modules.
 import hashlib
 
-# Try to import known optional hashlib-compatible modules.
-# try:
-#     import pyblake2 as blake2
-# except ImportError:
-#     blake2 = None
+class blake2b_128_shim():
+    def __new__(cls):
+        return hashlib.blake2b(digest_size=16)
 
+class blake2b_160_shim():
+    def __new__(cls):
+        return hashlib.blake2b(digest_size=20)
+
+class blake2b_256_shim():
+    def __new__(cls):
+        return hashlib.blake2b(digest_size=32)
+
+class blake2b_512_shim():
+    def __new__(cls):
+        return hashlib.blake2b(digest_size=64)
+
+class blake2s_128_shim():
+    def __new__(cls):
+        return hashlib.blake2s(digest_size=16)
+
+class blake2s_160_shim():
+    def __new__(cls):
+        return hashlib.blake2s(digest_size=20)
+
+class blake2s_256_shim():
+    def __new__(cls):
+        return hashlib.blake2s(digest_size=32)
 
 def _is_app_specific_func(code):
     """Is the given hash function integer `code` application-specific?"""
@@ -99,14 +120,14 @@ class FuncReg(metaclass=_FuncRegMeta):
         (Func.shake_128, 'shake_128', hashlib.shake_128),
         (Func.shake_256, 'shake_256', hashlib.shake_256),
 
-        (Func.blake2b_128, 'blake2b_128', hashlib.blake2b(digest_size=16)),
-        (Func.blake2b_160, 'blake2b_160', hashlib.blake2b(digest_size=20)),
-        (Func.blake2b_256, 'blake2b_256', hashlib.blake2b(digest_size=32)),
-        (Func.blake2b_512, 'blake2b_512', hashlib.blake2b(digest_size=64)),
+        (Func.blake2b_128, 'blake2b_128', blake2b_128_shim),
+        (Func.blake2b_160, 'blake2b_160', blake2b_160_shim),
+        (Func.blake2b_256, 'blake2b_256', blake2b_256_shim),
+        (Func.blake2b_512, 'blake2b_512', blake2b_512_shim),
 
-        (Func.blake2s_128, 'blake2s_128', hashlib.blake2s(digest_size=16)),
-        (Func.blake2s_160, 'blake2s_160', hashlib.blake2s(digest_size=20)),
-        (Func.blake2s_256, 'blake2s_256', hashlib.blake2s(digest_size=32))]
+        (Func.blake2s_128, 'blake2s_128', blake2s_128_shim),
+        (Func.blake2s_160, 'blake2s_160', blake2s_160_shim),
+        (Func.blake2s_256, 'blake2s_256', blake2s_256_shim)]
 
     # Hashlib compatibility data for a hash: hash name (e.g. ``sha256`` for
     # SHA-256, ``sha2-256`` in multihash), and the corresponding constructor.
