@@ -139,7 +139,7 @@ class Multihash(namedtuple('Multihash', 'func digest')):
             fc = self.func.value
         except AttributeError:  # application-specific function code
             fc = self.func
-        mhash = bytes([fc, len(self.digest)]) + self.digest
+        mhash = fc.to_bytes((fc.bit_length() + 7) // 8, 'big') + bytes([len(self.digest)]) + self.digest
         if encoding:
             mhash = CodecReg.get_encoder(encoding)(mhash)
         return mhash
