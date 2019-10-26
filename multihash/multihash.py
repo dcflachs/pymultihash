@@ -228,7 +228,7 @@ def decode(mhash, encoding=None):
         length = mhash[1]
         digest = mhash[2:]
 
-        if func == 0xb2:
+        if func == bytes([0xb2]):
             #Blake2 hash
             func = mhash[0:1]
             length = mhash[2]
