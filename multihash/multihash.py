@@ -227,6 +227,13 @@ def decode(mhash, encoding=None):
         func = mhash[0]
         length = mhash[1]
         digest = mhash[2:]
+
+        if func == 0xb2:
+            #Blake2 hash
+            func = mhash[0:1]
+            length = mhash[2]
+            digest = mhash[3:]
+
     except IndexError as ie:
         raise ValueError("multihash is too short") from ie
     if length != len(digest):

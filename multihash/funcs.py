@@ -44,8 +44,18 @@ class Func(Enum):
     sha3_224 = 0x17
     shake_128 = 0x18
     shake_256 = 0x19
-    blake2b = 0x40
-    blake2s = 0x41
+
+    blake2s_128 = 0xb250
+    blake2s_160 = 0xb254
+    blake2s_256 = 0xb260
+
+    blake2b_128 = 0xb210
+    blake2b_160 = 0xb214
+    blake2b_256 = 0xb220
+    blake2b_512 = 0xb240
+
+    blake2b = blake2b_512
+    blake2s = blake2s_256
 
 
 class _FuncRegMeta(type):
@@ -89,8 +99,14 @@ class FuncReg(metaclass=_FuncRegMeta):
         (Func.shake_128, 'shake_128', hashlib.shake_128),
         (Func.shake_256, 'shake_256', hashlib.shake_256),
 
-        (Func.blake2b, 'blake2b', hashlib.blake2b),
-        (Func.blake2s, 'blake2s', hashlib.blake2s)]
+        (Func.blake2b_128, 'blake2b_128', hashlib.blake2b(digest_size=16)),
+        (Func.blake2b_160, 'blake2b_160', hashlib.blake2b(digest_size=20)),
+        (Func.blake2b_256, 'blake2b_256', hashlib.blake2b(digest_size=32)),
+        (Func.blake2b_512, 'blake2b_512', hashlib.blake2b(digest_size=64)),
+
+        (Func.blake2s_128, 'blake2s_128', hashlib.blake2s(digest_size=16)),
+        (Func.blake2s_160, 'blake2s_160', hashlib.blake2s(digest_size=20)),
+        (Func.blake2s_256, 'blake2s_256', hashlib.blake2s(digest_size=32))]
 
     # Hashlib compatibility data for a hash: hash name (e.g. ``sha256`` for
     # SHA-256, ``sha2-256`` in multihash), and the corresponding constructor.
