@@ -228,7 +228,7 @@ def decode(mhash, encoding=None):
         length = mhash[1]
         digest = mhash[2:]
 
-        if func == bytes([0xb2]):
+        if func == 0xb2:
             #Blake2 hash
             func = int.from_bytes(mhash[0:2], "big")
             length = mhash[2]
