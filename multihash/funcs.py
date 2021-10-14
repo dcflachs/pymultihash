@@ -40,6 +40,11 @@ class blake2s_256_shim():
     def __new__(cls):
         return hashlib.blake2s(digest_size=32)
 
+def _is_app_specific_func(code):
+    """Is the given hash function integer `code` application-specific?"""
+    return isinstance(code, Integral) and (0x00 <= code <= 0x0f)
+
+
 class Func(Enum):
     """An enumeration of hash functions supported by multihash.
 
