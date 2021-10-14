@@ -40,11 +40,6 @@ class blake2s_256_shim():
     def __new__(cls):
         return hashlib.blake2s(digest_size=32)
 
-def _is_app_specific_func(code):
-    """Is the given hash function integer `code` application-specific?"""
-    return isinstance(code, Integral) and (0x00 <= code <= 0x0f)
-
-
 class Func(Enum):
     """An enumeration of hash functions supported by multihash.
 
@@ -212,9 +207,9 @@ class FuncReg(metaclass=_FuncRegMeta):
         >>> 0x05 in FuncReg
         False
         """
-        if not _is_app_specific_func(code):
+        if code in Func:
             raise ValueError(
-                "only application-specific functions can be registered")
+                "cannot replace builtin functions can be registered")
         # Check already registered name in different mappings.
         name_mapping_data = [  # (mapping, name in mapping, error if existing)
             (cls._func_from_name, name,
@@ -252,7 +247,7 @@ class FuncReg(metaclass=_FuncRegMeta):
         """
         if code in Func:
             raise ValueError(
-                "only application-specific functions can be unregistered")
+                "builtin functions can not be unregistered")
         # Remove mapping to function by name.
         func_names = {n for (n, f) in cls._func_from_name.items() if f == code}
         for func_name in func_names:
