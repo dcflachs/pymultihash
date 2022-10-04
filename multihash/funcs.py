@@ -212,9 +212,9 @@ class FuncReg(metaclass=_FuncRegMeta):
         >>> 0x05 in FuncReg
         False
         """
-        if code in Func:
-            raise ValueError(
-                "cannot replace builtin functions can be registered")
+        # if code in Func:
+        #     raise ValueError(
+        #         "cannot replace builtin functions can be registered")
         # Check already registered name in different mappings.
         name_mapping_data = [  # (mapping, name in mapping, error if existing)
             (cls._func_from_name, name,
