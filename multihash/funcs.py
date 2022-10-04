@@ -6,7 +6,7 @@
 """Enumeration of standard multihash functions, and function registry"""
 
 from collections import namedtuple
-from enum import Enum
+from enum import IntEnum
 from numbers import Integral
 
 # Import standard hashlib-compatible modules.
@@ -45,7 +45,7 @@ def _is_app_specific_func(code):
     return isinstance(code, Integral) and (0x00 <= code <= 0x0f)
 
 
-class Func(Enum):
+class Func(IntEnum):
     """An enumeration of hash functions supported by multihash.
 
     The name of each member has its hyphens replaced by underscores.
@@ -250,7 +250,7 @@ class FuncReg(metaclass=_FuncRegMeta):
             ...
         KeyError: ('unknown hash function', 'md-5')
         """
-        if code in Func:
+        if not _is_app_specific_func(code):
             raise ValueError(
                 "builtin functions can not be unregistered")
         # Remove mapping to function by name.
