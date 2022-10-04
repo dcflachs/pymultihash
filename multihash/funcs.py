@@ -179,9 +179,9 @@ class FuncReg(metaclass=_FuncRegMeta):
         >>> 0x05 in FuncReg
         False
         """
-        if not _is_app_specific_func(code):
-            raise ValueError(
-                "only application-specific functions can be registered")
+        # if not _is_app_specific_func(code):
+        #     raise ValueError(
+        #         "only application-specific functions can be registered")
         # Check already registered name in different mappings.
         name_mapping_data = [  # (mapping, name in mapping, error if existing)
             (cls._func_from_name, name,

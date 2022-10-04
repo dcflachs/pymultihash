@@ -47,8 +47,7 @@ setup(
     packages=find_packages(),
     install_requires=[],
     extras_require={
-        'sha3': ['pysha3'],
-        'blake2': ['pyblake2'],
+
     },
     test_suite='tests.test_multihash.suite',
 )
